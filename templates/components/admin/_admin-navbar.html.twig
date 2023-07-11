@@ -1,0 +1,86 @@
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark bg-navbar">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">
+			<img class="img-fluid mx-2" src="{{ asset('build/images/logo.svg') }}" alt="logo" width="40">
+		</a>
+		<button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav d-flex justify-content-between w-100 align-lg-items-center gap-lg-4 pt-4 pt-md-0 pb-2 pb-md-0">
+				<div class="d-flex flex-column flex-md-row">
+					<li class="nav-item px-2">
+						<a class="nav-link letter-spacing text-uppercase" href="#">XXXXXXXXX</a>
+					</li>
+					<li class="nav-item dropdown px-2">
+						<a class="nav-link dropdown-toggle letter-spacing text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">XXXXXXXXXXX</a>
+						<ul class="dropdown-menu dropdown-menu-start border-md-primary rounded-bottom-0 custom-border">
+							<li class="nav-item">
+								<a class="dropdown-item nav-link letter-spacing text-uppercase px-4" href="#">XXXXXXXXXXX</a>
+							</li>
+							<li class="nav-item">
+								<a class="dropdown-item nav-link letter-spacing text-uppercase px-4" href="#">XXXXXXXXXXX</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item px-2">
+						<a class="nav-link letter-spacing text-uppercase" href="#">XXXXXXXXXXX</a>
+					</li>
+					<li class="nav-item px-2">
+						<a class="nav-link letter-spacing text-uppercase" href="#">XXXXXXXXXXX</a>
+					</li>
+				</div>
+				<li><hr class="dropdown-item custom-dropdown-divider"></li>
+				{% if app.user %}
+					<div
+						class="d-flex flex-column flex-md-row align-items-md-center position-relative pe-3">
+						{# {% include '/components/svg/_icon_profile.svg.twig' %} #}
+						<button class="custom-btn dropdown-toggle d-flex align-items-center ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<p class="m-0">
+								<span
+									class="text-uppercase">{# {{ app.user.firstname }} #}
+								</span>
+							</p>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-md-end rounded-bottom-0 custom-border">
+							<li class="nav-item">
+								<a class="dropdown-item nav-link text-uppercase letter-spacing px-4" href="#">Mon profil</a>
+							</li>
+							<li class="nav-item"><hr class="dropdown-item custom-dropdown-divider"></li>
+							{% if is_granted('ROLE_ADMIN') %}
+								<li class="nav-item">
+									<a class="dropdown-item nav-link text-uppercase letter-spacing px-4" href="#">
+										Espace Utilisateur<span class='custom-width'></span>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="dropdown-item nav-link text-uppercase letter-spacing px-4" href="#">
+										Espace Admin<span class='custom-width'></span>
+									</a>
+								</li>
+							{% endif %}
+							<li class="nav-item">
+								<a class="d-flex nav-link align-items-center w-100 dropdown-item d-inline text-uppercase letter-spacing px-4" href="#">
+									Déconnexion
+									<span
+										class="mb-1 ms-1">{# {% include '/components/svg/_icon_deco.svg.twig' %} #}
+									</span>
+								</a>
+							</li>
+						</ul>
+					{% else %}
+						<ul class="navbar-nav mr-auto ms-4 ms-sm-0 mb-4 mb-sm-0">
+							<li class="nav-item d-flex align-items-end align-items-center px-2">
+								<a
+									class="nav-link text-uppercase letter-spacing" href="#">
+									{# {% include '/components/svg/_icon_profile.svg.twig' %} #}
+									Connexion
+								</a>
+							</li>
+						</ul>
+					{% endif %}
+				</div>
+			</ul>
+		</div>
+	</div>
+</nav>
