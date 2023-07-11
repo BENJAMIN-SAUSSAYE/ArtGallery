@@ -1,0 +1,5 @@
+header {
+  & p {
+    font-size: clamp(1rem, 1vw, 2.5rem);
+  }
+}
