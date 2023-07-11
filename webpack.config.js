@@ -69,4 +69,14 @@ Encore
 // uncomment if you're having problems with a jQuery plugin
 //.autoProvidejQuery()
 
-module.exports = Encore.getWebpackConfig();
+//module.exports = Encore.getWebpackConfig();
+
+const fullConfig = Encore.getWebpackConfig();
+
+fullConfig.devServer = {
+  watchFiles: {
+    paths: ["templates/**/*.html.twig"],
+  },
+};
+
+module.exports = fullConfig;
