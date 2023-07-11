@@ -1,0 +1,45 @@
+//start coding by removing this file and adding yours ;)
+@import "_theme.scss";
+@import "_footer";
+
+body {
+  background-color: $dark-light;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-title;
+  color: $primary-light;
+  letter-spacing: 2px;
+}
+
+p {
+  font-family: $font-base;
+  letter-spacing: 3px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  padding-block-start: $navbar-height;
+}
+
+.letter-spacing {
+  letter-spacing: 2px;
+}
+
+.letter-spacing-title {
+  letter-spacing: 5px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1rem;
+}
