@@ -17,10 +17,6 @@ $custom-colors: (
   "primary-light": $primary-light,
   "secondary-light": $secondary-light,
   "dark-light": $dark-light,
-  "red_wine": rgb(111, 51, 81),
-  "white_wine": rgb(246, 221, 234),
-  "pink_wine": rgb(245, 161, 239),
-  "gray_wine": rgb(156, 153, 153),
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
