@@ -32,13 +32,11 @@
 				</div>
 				<li><hr class="dropdown-item custom-dropdown-divider"></li>
 				{% if app.user %}
-					<div
-						class="d-flex flex-column flex-md-row align-items-md-center position-relative pe-3">
-						{# {% include '/components/svg/_icon_profile.svg.twig' %} #}
+					<div class="d-flex flex-column flex-md-row align-items-md-center position-relative pe-3">
+						{% include '/components/svg/_icon_profile.svg.twig' %}
 						<button class="custom-btn dropdown-toggle d-flex align-items-center ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<p class="m-0">
-								<span
-									class="text-uppercase">{# {{ app.user.firstname }} #}
+								<span class="text-uppercase">{{ app.user.firstname }}
 								</span>
 							</p>
 						</button>
@@ -62,8 +60,8 @@
 							<li class="nav-item">
 								<a class="d-flex nav-link align-items-center w-100 dropdown-item d-inline text-uppercase letter-spacing px-4" href="#">
 									Déconnexion
-									<span
-										class="mb-1 ms-1">{# {% include '/components/svg/_icon_deco.svg.twig' %} #}
+									<span class="mb-1 ms-1">
+										{% include '/components/svg/_icon_deco.svg.twig' %}
 									</span>
 								</a>
 							</li>
@@ -71,9 +69,8 @@
 					{% else %}
 						<ul class="navbar-nav mr-auto ms-4 ms-sm-0 mb-4 mb-sm-0">
 							<li class="nav-item d-flex align-items-end align-items-center px-2">
-								<a
-									class="nav-link text-uppercase letter-spacing" href="#">
-									{# {% include '/components/svg/_icon_profile.svg.twig' %} #}
+								<a class="nav-link text-uppercase letter-spacing" href="#">
+									{% include '/components/svg/_icon_profile.svg.twig' %}
 									Connexion
 								</a>
 							</li>

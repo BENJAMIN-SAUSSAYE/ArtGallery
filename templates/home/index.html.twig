@@ -1,0 +1,41 @@
+{% extends 'visitor.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	- Home
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid py-4">
+		<header>
+			<div class="row">
+				<div class="col">
+					<div class="d-flex flex-column align-items-center text-center py-4">
+						<img class="object-fit-cover img-fluid" src="{{ asset('build/images/art-gallery.png') }}" alt="Image Art-Gallery Home">
+						<h1 class="d-none">Art-Gallery</h1>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<div class="col">
+					<div class="d-flex flex-column align-items-center py-4">
+						<p class="col-lg-6 mb-4 fs-5  text-center">
+							Parcequ'une image est parfois plus percutante qu'un long discours, venez partager vos images sur notre site.
+						</p>
+						<a href="#" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
+							S'ENREGISTRER
+							{% include "components/svg/_icon_next.svg.twig" %}
+						</a>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+{% endblock %}

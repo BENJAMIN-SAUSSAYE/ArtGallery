@@ -1,0 +1,24 @@
+.icon-light > svg {
+  color: $primary-light;
+}
+
+.icon-light:hover > svg {
+  color: $dark-light;
+}
+
+.icon-dark > svg {
+  color: $dark-light;
+}
+
+.icon-dark:hover > svg {
+  color: $light;
+}
+
+.icon-link-hover-left {
+  &:hover,
+  &:focus-visible {
+    > .bi {
+      transform: translate3d(-0.35rem, 0, 0);
+    }
+  }
+}
