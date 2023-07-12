@@ -1,0 +1,18 @@
+@import "_variables.scss";
+
+main {
+  min-height: calc(100vh - ($navbar-height + $footer-height));
+}
+
+.placeholder-style::placeholder {
+  color: $secondary;
+  font-style: italic;
+}
+
+.custom-m {
+  margin-top: 2.5rem;
+}
+
+label > a {
+  text-decoration: none;
+}

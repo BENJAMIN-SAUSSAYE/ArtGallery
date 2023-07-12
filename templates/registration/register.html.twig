@@ -1,0 +1,49 @@
+{% extends 'visitor.html.twig' %}
+
+{% block title %}
+	{{ parent()}}
+	- Inscription
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('registration') }}
+{% endblock %}
+
+{% block body %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+	<main class="container">
+		<section>
+			<div class="row pt-2 m-lg-2 p-lg-2">
+				<div class="col-lg-6 m-auto">
+					<div class="card border-primary border-1">
+						<div class="card-header bg-primary text-center border-primary border-1 p-lg-2">
+							{% include "components/svg/_icon_person-circle.svg.twig" %}
+						</div>
+						<div class="card-body m-lg-2">
+							<h1 class="text-center text-uppercase letter-spacing mt-2 fw-bold p-1">INSCRIPTION</h2>
+							{{ form_errors(registrationForm) }}
+							{{ form_start(registrationForm) }}
+							{{ form_row(registrationForm.firstname) }}
+							{{ form_row(registrationForm.lastname) }}
+							{{ form_row(registrationForm.email) }}
+							{{ form_row(registrationForm.plainPassword, { label: 'Mot de passe' }) }}
+							{{ form_row(registrationForm.agreeTerms) }}
+
+							<div class="d-flex justify-content-end align-items-center">
+
+								<button type="submit" class="align-self-end btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-2">
+									S'INSCRIRE
+									{% include "components/svg/_icon_validate.svg.twig" %}
+								</button>
+							</div>
+							{{ form_end(registrationForm) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock %}
