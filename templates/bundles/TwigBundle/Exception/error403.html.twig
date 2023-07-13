@@ -1,0 +1,28 @@
+{% extends 'visitor.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{% endblock %}
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center flex-column">
+    <header class="text-center mt-5 mb-5">
+        <img class="mt-5 w-50 object-fit-cover" src="{{ asset('build/images/error/error403.png')}}" alt="404">
+        <h1 class="text-danger mt-3">Accès refusé</h1>
+    </header>
+    <main class="d-flex  justify-content-center align-items-center flex-column">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-6">
+                <p class="mb-5 w-100 fw-light text-center">
+                    Erreur 403 - Accès refusé. <br>
+                    Désolé, mais vous n'êtes pas autorisé(e) à accéder à la ressource demandée.
+                </p>
+            </div>
+        </div>
+        <a class="btn btn-primary mb-5 " href="{{ path('app_home_index') }}">Retour à l'accueil</a>
+    </main>
+</div>
+{% endblock %}
+{% block footer %}
+{% endblock %}
