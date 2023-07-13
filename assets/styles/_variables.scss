@@ -18,3 +18,7 @@ $body-color: $light;
 $body-bg: $dark-light;
 $font-family-base: $font-base;
 $shadow-primary: 0.5rem 0.5rem 1rem rgba(89, 89, 87, 0.1);
+
+$navbar-dark-color: rgba($primary, 0.95);
+$navbar-dark-hover-color: rgba($light, 0.85);
+$navbar-dark-active-color: $secondary;
