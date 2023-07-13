@@ -1,0 +1,21 @@
+.custom-btn {
+  border: none;
+  background-color: transparent;
+  color: $light;
+}
+
+.custom-dropdown-divider {
+  height: 0;
+  overflow: hidden;
+  border-top: 1px solid $secondary;
+  opacity: 1;
+}
+
+.custom-width {
+  display: inline-block;
+  width: 25px;
+}
+
+.custom-border {
+  border-bottom: 1px solid $primary;
+}

@@ -14,13 +14,13 @@
 	{% for flash_error in app.flashes('verify_email_error') %}
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 	{% endfor %}
-	<main class="container">
+	<main class="container-fluid">
 		<section>
-			<div class="row pt-2 m-lg-2 p-lg-2">
-				<div class="col-lg-6 m-auto">
+			<div class="row">
+				<div class="m-auto col-md-9 col-lg-8 col-xl-6 col-xxl-4 px-sm-5 px-3 pt-5">
 					<div class="card border-primary border-1">
 						<div class="card-header bg-primary text-center border-primary border-1 p-lg-2">
-							{% include "components/svg/_icon_person-circle.svg.twig" %}
+							{% include "components/svg/_icon_profile_user.svg.twig" %}
 						</div>
 						<div class="card-body m-lg-2">
 							<h1 class="text-center text-uppercase letter-spacing mt-2 fw-bold p-1">INSCRIPTION</h2>
