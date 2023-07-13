@@ -1,0 +1,5 @@
+@import "_variables";
+
+main {
+  height: calc(100vh - clacl($navbar-height + $footer-height));
+}

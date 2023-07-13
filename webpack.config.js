@@ -37,6 +37,7 @@ Encore
   .addStyleEntry("home", "./assets/styles/home.scss")
   .addStyleEntry("registration", "./assets/styles/registration.scss")
   .addStyleEntry("album", "./assets/styles/album.scss")
+  .addStyleEntry("login", "./assets/styles/login.scss")
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()

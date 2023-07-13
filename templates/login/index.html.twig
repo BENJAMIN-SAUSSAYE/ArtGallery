@@ -1,0 +1,54 @@
+{% extends 'visitor.html.twig' %}
+
+{% block title %}
+	{{ parent()}}
+	- Connexion
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		{% if error %}
+			<div class="my-3 bg-danger p-3 rounded">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
+		<div class="row">
+			<div class="m-auto col-md-9 col-lg-8 col-xl-6 col-xxl-4 px-sm-5 px-3 pt-5">
+				<div class="card border-primary border-1">
+					<div class="card-header bg-primary text-center border-primary border-1 p-lg-2">
+						{% include "components/svg/_icon_person-circle.svg.twig" %}
+					</div>
+					<div class="card-body m-lg-2">
+						<h2 class="text-center text-uppercase letter-spacing mt-2 fw-bold p-1">Connexion</h2>
+						<form action="{{ path('app_login') }}" method="post" class="col-12 m-auto d-flex flex-column gap-1 mt-5">
+							<div class="mb-3">
+								<label for="username" class="form-label text-uppercase letter-spacing">Email</label>
+								<input type="text" class="form-control border-secondary bg-dark-light" id="username" name="_username" value="{{ last_username }}">
+							</div>
+
+							<div class="pb-3">
+								<label for="password" class="form-label text-uppercase letter-spacing">Mot de passe</label>
+								<input type="password" class="form-control border-secondary bg-dark-ligh" id="password" name="_password">
+								{# <a href="{{ path('app_forgot_password_request') }}" class="letter-spacing text-decoration-none d-block mt-2">Mot de passe oublié ?</a> #}
+							</div>
+
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+							{# If you want to control the URL the user is redirected to on success#}
+							<input type="hidden" name="_target_path" value="/"> 
+
+							<div class="d-flex flex-column justify-content-center align-items-center m-auto my-5">
+								<p class="mb-1 fs-6 fw-light text-center">Vous n'avez pas encore de compte ?</p>
+								<a href="{{ path('app_register') }}" class="letter-spacing text-decoration-none">Créer votre compte</a>
+								<button type="submit" class="btn my-5">Se connecter</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
