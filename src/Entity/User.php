@@ -54,11 +54,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $albums;
 
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     public function __construct()
     {
-        $this->createdAt = \DateTimeImmutable::createFromMutable(new \DateTime());
+        $this->createdAt = new \DateTime();
         $this->albums = new ArrayCollection();
     }
 
@@ -198,12 +198,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 
