@@ -1,0 +1,32 @@
+{% extends 'visitor.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}{% endblock %}
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center flex-column">
+    <header class="text-center mt-5 mb-5">
+        <img class="mt-5 w-25 object-fit-cover" src="{{ asset('build/images/error/error500.webp')}}" alt="500">
+        <h1 class="text-danger mt-5">Erreur Serveur</h1>
+    </header>
+    <main class="d-flex  justify-content-center align-items-center flex-column">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-6">
+                <p class="mb-5 w-100 fw-light text-center">
+                    Erreur {{ status_code }} - Oups ! Une erreur s'est produite. <br>
+                    Désolé, mais il semblerait qu'une erreur interne se soit produite sur notre serveur. Notre équipe
+                    technique
+                    a
+                    été notifiée et travaille activement à la résolution de ce problème. Veuillez réessayer
+                    ultérieurement.
+                </p>
+            </div>
+        </div>
+        <a class="btn btn-primary mb-5 " href="{{ path('app_home_index') }}">Retour à l'accueil</a>
+    </main>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
