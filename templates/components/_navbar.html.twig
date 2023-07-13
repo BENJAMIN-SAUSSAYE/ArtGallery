@@ -12,12 +12,14 @@
 					<li class="nav-item px-2">
 						<a class="nav-link letter-spacing" href="#">POPULAIRES</a>
 					</li>
+					{% if is_granted('ROLE_USER') %}
 					<li class="nav-item px-2">
-						<a class="nav-link letter-spacing" href="#">MES ALBUMS</a>
+						<a class="nav-link letter-spacing" href="{{ path('app_album_index') }}">MES ALBUMS</a>
 					</li>
 					<li class="nav-item px-2">
 						<a class="nav-link letter-spacing" href="#">MES FAVORIS</a>
 					</li>
+					{% endif %}
 				</div>
 				<li><hr class="dropdown-item custom-dropdown-divider"></li>
 				{% if app.user %}

@@ -1,0 +1,65 @@
+{% extends 'visitor.html.twig' %}
+{% block title %}
+	{{ parent()}}
+	- Mes Albums
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('album') }}
+{% endblock %}
+{% block body %}
+<main>
+    <div class="container">
+        <div class="row border-bottom-1 border-black">
+            <h1>Mes Albums</h1>
+         </div>
+         <div class="row">
+            <div class="d-flex justify-content-end align-self-end px-4">
+                <a role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4" href="{{ path('app_album_new') }}">
+                    {{ include('/components/svg/_icon_add.svg.twig') }}
+                    AJOUTER</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% for album in albums %}
+                <div class="card">
+                     <div class="card-header">
+                        Date {{ album.createdAt ? album.createdAt|date('d/m/Y') : '' }}
+                    </div>
+                    <a href="{{ path('app_album_show', {'id': album.id}) }}">
+                        <img src="{{asset('build/images/placeholder_album_250x150.svg')}}" class="card-img-top" alt="album image">
+                    </a>
+                    <div class="card-body">
+                        <p></p>
+                        <h5 class="card-title">{{ album.name }}</h5>
+                        <p class="card-text">{{ album.description }}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Publique {{ album.isPrivate ? 'Yes' : 'No' }}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="{{ path('app_album_edit', {'id': album.id}) }}" class="card-link" class="fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
+							MODIFIER
+							{% include "components/svg/_icon_next.svg.twig" %}
+						</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{# <td>{{ album.id }}</td>
+<td>{{ album.name }}</td>
+<td>{{ album.createdAt ? album.createdAt|date('d/m/Y') : '' }}</td>
+<td>{{ album.description }}</td>
+<td>{{ album.isPrivate ? 'Yes' : 'No' }}</td>
+<td>
+    <a href="{{ path('app_album_show', {'id': album.id}) }}">show</a>
+    <a href="{{ path('app_album_edit', {'id': album.id}) }}">edit</a>
+</td>  #}
+
+{% endblock %}
