@@ -10,6 +10,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
+    public const USER_COUNT = 5;
+
     private UserPasswordHasherInterface $passwordHasher;
 
     public function __construct(UserPasswordHasherInterface $passwordHasher)
@@ -20,18 +22,24 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        $user = new User();
-        $user->setEmail('user@monsite.com');
-        $user->setRoles(['ROLE_USER']);
-        $hashedPassword = $this->passwordHasher->hashPassword(
-            $user,
-            'userpassword'
-        );
-        $user->setPassword($hashedPassword);
-        $user->setFirstname('Loic');
-        $user->setLastname('Dupond');
-        $this->addReference('user_roger', $user);
-        $manager->persist($user);
+        // Création des utilisateurs
+        for ($i = 1; $i <= self::USER_COUNT; $i++) {
+            $user = new User();
+            $user->setEmail('user_' . $i . '@monsite.com');
+            $user->setRoles(['ROLE_USER']);
+            $user->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('1 year', '+10 days')));
+
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $user,
+                'userpassword'
+            );
+            $user->setPassword($hashedPassword);
+            $user->setFirstname($faker->firstName());
+            $user->setLastname($faker->lastName());
+            $this->addReference('user_' . $i, $user);
+            $manager->persist($user);
+        }
+
         $manager->flush();
 
 
@@ -46,6 +54,7 @@ class UserFixtures extends Fixture
         $admin->setPassword($hashedPassword);
         $admin->setFirstname('Benjamin');
         $admin->setLastname('Saussaye');
+        $admin->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('1 year', '+10 days')));
         $this->addReference('user_admin', $admin);
         $manager->persist($admin);
         $manager->flush();
