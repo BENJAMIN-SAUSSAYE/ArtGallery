@@ -1,0 +1,27 @@
+@import "_variables";
+.card {
+  background-color: $tertiary;
+  box-shadow: $shadow-secondary;
+}
+.card h5 {
+  font-weight: 600;
+}
+
+.card-title.overflow {
+  height: 55px;
+  max-height: 55px;
+  overflow: hidden;
+  border-bottom: 1px dashed $dark;
+}
+
+.card-text.overflow {
+  padding-top: 1rem;
+  height: 155px;
+  max-height: 155px;
+  overflow: auto;
+  font-weight: 300;
+}
+
+.card-link:hover {
+  color: $dark-light;
+}
