@@ -28,7 +28,7 @@
 							<div class="card">
 								<div class="card-header d-flex justify-content-between align-items-center">
 									<span class="text-capitalize">
-										{% if(album.isPrivate) %}
+										{% if album.isPrivate %}
 											<span class="text-secondary pe-1">{% include "components/svg/_icon_eye.svg.twig" %}</span>
 											public
 										{% else %}
@@ -48,10 +48,12 @@
 									<p class="card-text overflow">{{ album.description }}</p>
 								</div>
 								<div class="card-footer text-end">
-									<a href="{{ path('app_album_edit', {'id': album.id}) }}" class="card-link fw-bolder icon-link icon-link-hover-left icon-light text-uppercase text-decoration-none letter-spacing pe-1">
-										{{ include('/components/svg/_icon_edit.svg.twig') }}
-										<span class="text-shadow">Modifier</span>
-									</a>
+									{% if not album.isMainAlbum %}
+										<a href="{{ path('app_album_edit', {'id': album.id}) }}" class="card-link fw-bolder icon-link icon-link-hover-left icon-light text-uppercase text-decoration-none letter-spacing pe-1">
+											{{ include('/components/svg/_icon_edit.svg.twig') }}
+											<span class="text-shadow">Modifier</span>
+										</a>
+									{% endif %}
 								</div>
 							</div>
 						</div>

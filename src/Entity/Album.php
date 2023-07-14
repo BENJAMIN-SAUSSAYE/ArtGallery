@@ -32,12 +32,16 @@ class Album
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ["default" => 'true'])]
     private ?bool $isPrivate = null;
+
+    #[ORM\Column(options: ["default" => 'false'])]
+    private ?bool $isMainAlbum = null;
 
     public function __construct(?bool $isPrivate = false)
     {
         $this->isPrivate = $isPrivate;
+        $this->isMainAlbum = false;
         $this->createdAt = \DateTimeImmutable::createFromMutable(new \DateTime());
     }
 
@@ -94,7 +98,7 @@ class Album
         return $this;
     }
 
-    public function isIsPrivate(): ?bool
+    public function isPrivate(): ?bool
     {
         return $this->isPrivate;
     }
@@ -102,6 +106,18 @@ class Album
     public function setIsPrivate(bool $isPrivate): static
     {
         $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    public function isMainAlbum(): ?bool
+    {
+        return $this->isMainAlbum;
+    }
+
+    public function setIsMainAlbum(bool $isMainAlbum): static
+    {
+        $this->isMainAlbum = $isMainAlbum;
 
         return $this;
     }
