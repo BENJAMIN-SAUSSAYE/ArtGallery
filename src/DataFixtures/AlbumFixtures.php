@@ -26,6 +26,7 @@ class AlbumFixtures extends Fixture implements DependentFixtureInterface
                 $album->setIsPrivate($faker->boolean(10));
                 $album->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('1 year', '+10 days')));
                 $album->setUser($user);
+                $album->setIsMainAlbum(false);
                 $manager->persist($album);
                 $this->addReference('user_' . $u . '_album_' . $i, $album);
             }

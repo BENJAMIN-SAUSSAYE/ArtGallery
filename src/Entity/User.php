@@ -47,10 +47,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', options: ["default" => 'false'])]
     private $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Album::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Album::class, cascade: ["persist"])]
     private Collection $albums;
 
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
@@ -60,6 +60,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->createdAt = new \DateTime();
         $this->albums = new ArrayCollection();
+        $mainAlbum = new Album();
+        $mainAlbum->setDescription("Album principal qui contient vos photos par defaut. Ne peut être supprimé.");
+        $mainAlbum->setIsPrivate(true);
+        $mainAlbum->setName("Album Principal");
+        $mainAlbum->setUser($this);
+        $mainAlbum->setIsMainAlbum(true);
+        $this->albums->add($mainAlbum);
     }
 
     public function getId(): ?int
