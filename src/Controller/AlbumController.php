@@ -32,6 +32,10 @@ class AlbumController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $album = new Album();
+        $album->setCreatedAt(new \DateTime());
+        /** @var User $user */
+        $user = $this->getUser();
+        $album->setUser($user);
         $form = $this->createForm(AlbumType::class, $album);
         $form->handleRequest($request);
 
