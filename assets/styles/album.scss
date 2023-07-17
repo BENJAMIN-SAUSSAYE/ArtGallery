@@ -7,11 +7,13 @@
   font-weight: 600;
 }
 
+.card-header {
+  background-color: $dark-light;
+}
 .card-title.overflow {
   height: 55px;
   max-height: 55px;
   overflow: hidden;
-  border-bottom: 1px dashed $dark;
 }
 
 .card-text.overflow {
@@ -24,6 +26,7 @@
 
 .card-footer {
   min-height: 46px;
+  background-color: $dark-light;
 }
 .card-link:hover {
   color: $dark-light;
