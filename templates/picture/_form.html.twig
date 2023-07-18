@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="d-flex flex-sm-row flex-column justify-content-between my-4">
+		<button class="btn fw-bolder text-dark fw-bolder icon-link icon-link-hover icon-dark text-uppercase order-2 mb-4">
+			{{ button_label|default('Valider') }}
+			{% include "components/svg/_icon_validate.svg.twig" %}
+		</button>
+		<a class="btn fw-bolder text-dark icon-link icon-link-hover-left icon-dark text-uppercase order-3 order-sm-1 mb-4" href="{{ path('app_album_index') }}">
+			{% include "components/svg/_icon_backlink.svg.twig" %}
+			Retour
+		</a>
+	</div>
+{{ form_end(form) }}

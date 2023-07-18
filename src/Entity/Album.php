@@ -26,6 +26,7 @@ class Album
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[Assert\DateTime]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
