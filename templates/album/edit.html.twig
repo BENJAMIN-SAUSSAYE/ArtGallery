@@ -1,7 +1,12 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Edit Album{% endblock %}
-
+{% extends 'visitor.html.twig' %}
+{% block title %}
+	{{ parent()}}
+	- Modification Album
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('album') }}
+{% endblock %}
 {% block body %}
     <h1>Edit Album</h1>
 
