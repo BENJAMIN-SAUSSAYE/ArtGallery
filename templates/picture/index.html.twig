@@ -1,9 +1,14 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Picture index{% endblock %}
-
+{% extends 'visitor.html.twig' %}
+{% block title %}
+	{{ parent()}}
+	- Index Images
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('album') }}
+{% endblock %}
 {% block body %}
-    <h1>Picture index</h1>
+    <h1>Liste Des Images</h1>
 
     <table class="table">
         <thead>
@@ -22,8 +27,8 @@
             <tr>
                 <td>{{ picture.id }}</td>
                 <td>{{ picture.title }}</td>
-                <td>{{ picture.fileName }}</td>
-                <td>{{ picture.createdAt }}</td>
+                <td>{{ picture.pictureFile }}</td>
+                <td>{{ picture.createdAt|date("d/m/Y") }}</td>
                 <td>{{ picture.isPrivate ? 'Yes' : 'No' }}</td>
                 <td>{{ picture.isAlbumCover ? 'Yes' : 'No' }}</td>
                 <td>

@@ -19,14 +19,12 @@ class Picture
     #[ORM\Column]
     private ?int $id = null;
 
-
     #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
-    #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $pictureFile = null;
 
     #[Assert\Image]
@@ -37,8 +35,7 @@ class Picture
     )]
     private ?File $file = null;
 
-    #[Assert\DateTime]
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column]
@@ -50,11 +47,15 @@ class Picture
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DatetimeInterface $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pictures')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Album $album = null;
+
     public function __construct(?bool $isPrivate = false)
     {
         $this->isPrivate = $isPrivate;
         $this->isAlbumCover = false;
-        $this->createdAt = new \DateTime('now');
+        $this->setCreateAt(new \DateTime('now'));
     }
 
     public function getId(): ?int
@@ -126,12 +127,44 @@ class Picture
         return $this->file;
     }
 
-    public function setFile(File $file = null): File
+    public function setFile(File $file = null): ?File
     {
         $this->file = $file;
         if ($file) {
             $this->updatedAt = new \DateTime('now');
         }
         return $this->file;
+    }
+
+    /**
+     * Get the value of updatedAt
+     */
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set the value of updatedAt
+     *
+     * @return  self
+     */
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getAlbum(): ?Album
+    {
+        return $this->album;
+    }
+
+    public function setAlbum(?Album $album): static
+    {
+        $this->album = $album;
+
+        return $this;
     }
 }

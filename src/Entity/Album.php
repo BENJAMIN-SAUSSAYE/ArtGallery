@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AlbumRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,11 +41,15 @@ class Album
     #[ORM\Column(options: ["default" => 'false'])]
     private ?bool $isMainAlbum = null;
 
+    #[ORM\OneToMany(mappedBy: 'album', targetEntity: Picture::class)]
+    private Collection $pictures;
+
     public function __construct(?bool $isPrivate = false)
     {
         $this->isPrivate = $isPrivate;
         $this->isMainAlbum = false;
         $this->createdAt = \DateTimeImmutable::createFromMutable(new \DateTime());
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,6 +125,36 @@ class Album
     public function setIsMainAlbum(bool $isMainAlbum): static
     {
         $this->isMainAlbum = $isMainAlbum;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): static
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+            $picture->setAlbum($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): static
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getAlbum() === $this) {
+                $picture->setAlbum(null);
+            }
+        }
 
         return $this;
     }
