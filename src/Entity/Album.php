@@ -28,8 +28,7 @@ class Album
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[Assert\DateTime]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'], nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -41,14 +40,14 @@ class Album
     #[ORM\Column(options: ["default" => 'false'])]
     private ?bool $isMainAlbum = null;
 
-    #[ORM\OneToMany(mappedBy: 'album', targetEntity: Picture::class)]
+    #[ORM\OneToMany(mappedBy: 'album', targetEntity: Picture::class,  cascade: ['persist', 'remove'])]
     private Collection $pictures;
 
     public function __construct(?bool $isPrivate = false)
     {
         $this->isPrivate = $isPrivate;
         $this->isMainAlbum = false;
-        $this->createdAt = \DateTimeImmutable::createFromMutable(new \DateTime());
+        $this->createdAt = new \DateTime('now');
         $this->pictures = new ArrayCollection();
     }
 

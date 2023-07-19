@@ -47,12 +47,11 @@ class UserDashbordController extends AbstractDashboardController
 
         yield MenuItem::linkToUrl('Homepage', 'fa fa-house', $this->generateUrl('app_home_index'));
 
-        yield MenuItem::section('Utilisateur');
-
         yield MenuItem::linkToDashboard('Dashboard', 'fa-solid fa-gear');
 
-        yield MenuItem::section('Albmums');
-        yield MenuItem::linkToCrud('Ajouter', 'fa fa-circle-plus', Album::class)->setController('\App\Controller\User\AlbumCrudController')->setAction('new');
+        yield MenuItem::section('Gestion');
+        yield MenuItem::linkToCrud('Albums', 'fas fa-list', Album::class)->setController('\App\Controller\User\AlbumCrudController')->setAction('index');
+        yield MenuItem::linkToCrud('Images', 'fas fa-image', Album::class)->setController('\App\Controller\User\PictureCrudController')->setAction('index');
 
         yield MenuItem::section('Profil');
         yield MenuItem::linkToCrud('Voir', 'fa fa-eye', User::class)->setController('\App\Controller\User\UserCrudController')->setAction('index');

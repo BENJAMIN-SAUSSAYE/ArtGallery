@@ -23,16 +23,11 @@ class Picture
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
-    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pictureFile = null;
 
-    #[Assert\Image]
     #[Vich\UploadableField(mapping: 'picture_file', fileNameProperty: 'pictureFile')]
-    #[Assert\File(
-        maxSize: '1M',
-        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
-    )]
+    #[Assert\File(maxSize: '1M', mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],)]
     private ?File $file = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -44,7 +39,7 @@ class Picture
     #[ORM\Column]
     private ?bool $isAlbumCover = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'], nullable: true)]
     private ?\DatetimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'pictures')]
@@ -55,7 +50,7 @@ class Picture
     {
         $this->isPrivate = $isPrivate;
         $this->isAlbumCover = false;
-        $this->setCreateAt(new \DateTime('now'));
+        $this->createdAt = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -80,7 +75,7 @@ class Picture
         return $this->pictureFile;
     }
 
-    public function setPictureFile(string $pictureFile): static
+    public function setPictureFile(?string $pictureFile): static
     {
         $this->pictureFile = $pictureFile;
         return $this;
@@ -166,5 +161,10 @@ class Picture
         $this->album = $album;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }
