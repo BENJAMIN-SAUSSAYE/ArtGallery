@@ -3,6 +3,8 @@
 namespace App\Controller\User;
 
 use App\Entity\Album;
+use App\Entity\Picture;
+use App\Form\PictureType;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -10,6 +12,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Form\Type\TextEditorType;
+use Vich\UploaderBundle\Naming\PropertyNamer;
 
 class AlbumCrudController extends AbstractCrudController
 {
@@ -42,14 +52,31 @@ class AlbumCrudController extends AbstractCrudController
             ->setAutofocusSearch();
     }
 
-    /*
+    public function createEntity(string $entityFqcn)
+    {
+        $album = new Album();
+        $album->setUser($this->getUser());
+        $album->setCreatedAt(new \DateTime('now'));
+        return $album;
+    }
+
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        yield IdField::new('id')
+            ->onlyOnIndex();
+
+        yield TextField::new('name', 'Nom de l\'album');
+
+        yield TextEditorField::new('description', 'Description');
+
+        yield CollectionField::new('pictures', 'Images')->setEntryType(PictureType::class);
+
+        yield AssociationField::new('user')->setLabel('Auteur')->setFormTypeOption('disabled', 'disabled');
+
+        yield DateTimeField::new('createdAt')
+            ->hideOnForm()
+            ->setLabel('Créé le')->setRequired(true)
+            //->setFormTypeOption('disabled', 'disabled')
+        ;
     }
-    */
 }
