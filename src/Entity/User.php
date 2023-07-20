@@ -220,4 +220,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return ($this->lastName . ' ' . $this->firstName);
     }
+
+    public function getTotalPicturesCount(): int
+    {
+        $total = 0;
+
+        foreach ($this->getAlbums() as $album) {
+            $total += $album->getPictures()->count();
+        }
+        return $total;
+    }
 }
