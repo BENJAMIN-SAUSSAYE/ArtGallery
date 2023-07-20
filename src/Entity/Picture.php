@@ -52,12 +52,17 @@ class Picture
     #[ORM\JoinTable(name: 'user_liked_picture')]
     private Collection $likedUsers;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoritePictures')]
+    #[ORM\JoinTable(name: 'user_favorite_picture')]
+    private Collection $favoriteUsers;
+
     public function __construct(?bool $isPrivate = false)
     {
         $this->isPrivate = $isPrivate;
         $this->isAlbumCover = false;
         $this->createdAt = new \DateTime('now');
         $this->likedUsers = new ArrayCollection();
+        $this->favoriteUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,6 +202,33 @@ class Picture
     {
         if ($this->likedUsers->removeElement($likedUser)) {
             $likedUser->removeLikedPicture($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavoriteUsers(): Collection
+    {
+        return $this->favoriteUsers;
+    }
+
+    public function addFavoriteUser(User $favoriteUser): static
+    {
+        if (!$this->favoriteUsers->contains($favoriteUser)) {
+            $this->favoriteUsers->add($favoriteUser);
+            $favoriteUser->addFavoritePicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteUser(User $favoriteUser): static
+    {
+        if ($this->favoriteUsers->removeElement($favoriteUser)) {
+            $favoriteUser->removeFavoritePicture($this);
         }
 
         return $this;

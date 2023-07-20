@@ -59,6 +59,12 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
                     $picture->setPictureFile($pictureFileName);
                     $picture->setAlbum($album);
 
+                    //add favorite image
+                    if ($p === $faker->numberBetween(0, $nbrImages) && $album->isPrivate() === false) {
+                        $favoriteUser = $this->getReference('user_' . $faker->numberBetween(1, UserFixtures::USER_COUNT));
+                        $picture->addFavoriteUser($favoriteUser);
+                    }
+
                     //generate likeuser picture
                     $arraykeysUser = range(1, UserFixtures::USER_COUNT, 1);
                     $countUser = $faker->numberBetween(1, UserFixtures::USER_COUNT);

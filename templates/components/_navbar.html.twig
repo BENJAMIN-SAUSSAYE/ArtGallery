@@ -21,7 +21,7 @@
 						<a class="nav-link letter-spacing {{ route_name == 'app_album_index' ? 'active' : '' }}" href="{{ path('app_album_index') }}">MES ALBUMS</a>
 					</li>
 					<li class="nav-item px-2">
-						<a class="nav-link letter-spacing" href="#">MES FAVORIS</a>
+						<a class="nav-link letter-spacing {{ route_name == 'app_picture_favorite' ? 'active' : '' }}" href="{{ path('app_picture_favorite') }}">MES FAVORIS</a>
 					</li>
 					{% endif %}
 				</div>

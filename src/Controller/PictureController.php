@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Picture;
+use App\Entity\User;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/image')]
 class PictureController extends AbstractController
@@ -33,12 +35,24 @@ class PictureController extends AbstractController
     }
 
     #[Route('/populaires/liste', name: 'app_picture_liked', methods: ['GET'])]
-    public function populairPictures(PictureRepository $pictureRepository): Response
+    public function likedPictures(PictureRepository $pictureRepository): Response
     {
         $picturesLiked = $pictureRepository->getTopLikedPictures(self::NBR_LIKED_IMAGES);
 
         return $this->render('picture/liked_pictures.html.twig', [
             'pictures' => $picturesLiked,
+        ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/favoris/liste', name: 'app_picture_favorite', methods: ['GET'])]
+    public function favoritePictures(): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->render('picture/liked_pictures.html.twig', [
+            'pictures' => $user->getFavoritePictures(),
         ]);
     }
 }

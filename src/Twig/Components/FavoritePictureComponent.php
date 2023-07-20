@@ -14,17 +14,15 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\Bundle\SecurityBundle\Security;
 
-
+#[IsGranted('ROLE_USER')]
 #[AsLiveComponent()]
-class LikePictureComponent extends AbstractController
+
+class FavoritePictureComponent extends AbstractController
 {
 	use DefaultActionTrait;
 
 	#[LiveProp]
 	public bool $isLiked = false;
-
-	#[LiveProp]
-	public int $countVotes = 0;
 
 	#[LiveProp]
 	public ?Picture $picture = null;
@@ -33,7 +31,6 @@ class LikePictureComponent extends AbstractController
 	{
 	}
 
-	#[IsGranted('ROLE_USER')]
 	#[LiveAction]
 	public function updateState(): void
 	{
@@ -41,24 +38,19 @@ class LikePictureComponent extends AbstractController
 		$user = $this->security->getUser();
 		$this->isLiked = false;
 
-		if (!$user->isInLikedPictures($this->picture)) {
-			$user->addLikedPicture($this->picture);
+		if (!$user->isInFavoritesPicture($this->picture)) {
+			$user->addFavoritePicture($this->picture);
 			$this->isLiked = true;
 		} else {
-			$user->removeLikedPicture($this->picture);
+			$user->removeFavoritePicture($this->picture);
 		}
 		$this->userRepository->save($user, true);
-		$this->countVotes = $this->picture->getLikedUsers()->count();
 	}
 
 	public function getState(): void
 	{
-
 		/** @var User $user */
 		$user = $this->security->getUser();
-		if (isset($user)) {
-			$this->isLiked =  $user->isInLikedPictures($this->picture);
-		}
-		$this->countVotes = $this->picture->getLikedUsers()->count();
+		$this->isLiked =  $user->isInFavoritesPicture($this->picture);
 	}
 }

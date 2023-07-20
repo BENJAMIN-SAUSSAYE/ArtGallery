@@ -58,10 +58,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Picture::class, mappedBy: 'likedUsers')]
     private Collection $likedPictures;
 
+    #[ORM\ManyToMany(targetEntity: Picture::class, mappedBy: 'favoriteUsers')]
+    private Collection $favoritePictures;
+
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+
         $this->albums = new ArrayCollection();
+        $this->likedPictures = new ArrayCollection();
+        $this->favoritePictures = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+
         $mainAlbum = new Album();
         $mainAlbum->setDescription("Album principal qui contient vos photos par defaut. Ne peut être supprimé.");
         $mainAlbum->setIsPrivate(true);
@@ -69,7 +76,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $mainAlbum->setUser($this);
         $mainAlbum->setIsMainAlbum(true);
         $this->albums->add($mainAlbum);
-        $this->likedPictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -265,5 +271,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isInLikedPictures(Picture $picture): bool
     {
         return $this->likedPictures->contains($picture);
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getFavoritePictures(): Collection
+    {
+        return $this->favoritePictures;
+    }
+
+    public function addFavoritePicture(Picture $favoritePicture): static
+    {
+        if (!$this->favoritePictures->contains($favoritePicture)) {
+            $this->favoritePictures->add($favoritePicture);
+            $favoritePicture->addFavoriteUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritePicture(Picture $favoritePicture): static
+    {
+        if ($this->favoritePictures->removeElement($favoritePicture)) {
+            $favoritePicture->removeFavoriteUser($this);
+        }
+
+        return $this;
+    }
+
+    public function isInFavoritesPicture(Picture $picture): bool
+    {
+        return $this->favoritePictures->contains($picture);
     }
 }
