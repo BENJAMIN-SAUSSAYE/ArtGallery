@@ -19,13 +19,21 @@
 				</div>
 			</div>
 
+
 			<div class="row mb-4">
 				<div class="col">
 					<div class="d-flex justify-content-end align-items-center">
-						<a href="{{ path('app_album_show', {'id': picture.album.id}) }}" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
-							<span class="text-light pe-1">{% include "components/svg/_icon_backlink.svg.twig" %}</span>
-							RETOUR
-						</a>
+						{% if app.user %}
+							<a href="{{ path('app_album_show', {'id': picture.album.id}) }}" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
+								<span class="text-light pe-1">{% include "components/svg/_icon_backlink.svg.twig" %}</span>
+								RETOUR
+							</a>
+						{% else %}
+							<a href="{{ path('app_home_index') }}" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
+								<span class="text-light pe-1">{% include "components/svg/_icon_backlink.svg.twig" %}</span>
+								RETOUR
+							</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>

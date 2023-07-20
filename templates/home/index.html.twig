@@ -11,31 +11,76 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid py-4">
-		<header>
-			<div class="row">
-				<div class="col">
-					<div class="d-flex flex-column align-items-center text-center py-4">
-						<img class="object-fit-cover img-fluid" src="{{ asset('build/images/art-gallery.png') }}" alt="Image Art-Gallery Home">
-						<h1 class="">Art-Gallery</h1>
+	<div class="mt-4">
+		<div class="container-fluid px-4 m-auto">
+
+			<header>
+				<div class="row">
+					<div class="col">
+						<div class="d-flex flex-column align-items-center text-center py-4">
+							<img class="object-fit-cover img-fluid" src="{{ asset('build/images/art-gallery.png') }}" alt="Image Art-Gallery Home">
+							<h1 class="">Art-Gallery</h1>
+						</div>
 					</div>
 				</div>
-			</div>
-		</header>
-		<main>
-			<div class="row">
-				<div class="col">
-					<div class="d-flex flex-column align-items-center py-4">
-						<p class="col-lg-6 mb-4 fs-5  text-center">
-							Parcequ'une image est parfois plus percutante qu'un long discours, venez partager vos images sur notre site.
-						</p>
-						<a href="{{ path('app_register' ) }}" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
-							S'ENREGISTRER
-							{% include "components/svg/_icon_next.svg.twig" %}
-						</a>
+			</header>
+
+			<main>
+				<div class="row mb-4">
+					<div class="col">
+						<div class="d-flex flex-column align-items-center py-4">
+							<p class="col-lg-6 mb-4 fs-5  text-center">
+								Parcequ'une image est parfois plus percutante qu'un long discours, venez partager vos images sur notre site.
+							</p>
+							<a href="{{ path('app_register' ) }}" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
+								S'ENREGISTRER
+								{% include "components/svg/_icon_next.svg.twig" %}
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
-		</main>
+
+				<section>
+					<div class="row  mb-4">
+						<div class="col border border-opacity-50 border-bottom-2 border-to-0 border-start-0 border-end-0 border-top-0 border-light mb-4">
+							<h1 class="fw-bolder">Les Nouveautés</h1>
+						</div>
+					</div>
+
+					<div class="row row-cols-1 row-cols-xl-4 row-cols-xxl-6 g-4">
+						{% for picture in lastPublicPostedPictures %}
+							<div class="col">
+								<div class="p-2 m-2 shadow">
+									<div class="card border-0">
+										<div class="card-header bg-transparent">
+											<div class="d-flex flex-column justify-content-center align-items-center">
+												<h2 class="card-title text-capitalize text-secondary overflow pb-2 fs-5">
+													{{ picture.album.user.lastName ~ '.' ~ picture.album.user.firstName|u.truncate(1)  }}
+												</h2>
+												<p class="fw-lighter fs-6">
+													{% set leftDays = picture.createdAt|date_diff(date("now")) %}
+													{{ leftDays == 0 ? 'Aujourd\hui' : 'Il y a ' ~ leftDays ~ ' Jour(s)' }}
+												</p>
+											</div>
+										</div>
+
+										<div class="img-container">
+											<a href="{{ path('app_picture_show', {'id': picture.id}) }}">
+												<img src="{{ vich_uploader_asset(picture) }}" class="img-thumbnail img-fluid card-img-top" alt="album image">
+											</a>
+										</div>
+
+										<div class="card-body text-center text-capitalize overflow">
+											<h3 class="letter-spacing-title pb-2 fs-6">{{ picture.title }}</h3>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+			</main>
+		</div>
 	</div>
 {% endblock %}
