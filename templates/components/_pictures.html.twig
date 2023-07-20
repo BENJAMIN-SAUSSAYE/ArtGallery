@@ -3,6 +3,11 @@
 		<div class="p-1 m-1 p-sm-2 m-sm-2 shadow">
 			<div class="card border-0">
 				<div class="card-header bg-transparent">
+					{% if app.user %}
+						<div class="d-flex justify-content-end align-items-center m-0 p-0">
+							{{ component('FavoritePictureComponent', { picture : picture }) }}
+						</div>
+					{% endif %}
 					<div class="d-flex flex-column justify-content-center align-items-center">
 						<h2 class="card-title text-capitalize text-secondary overflow pb-2 fs-5">
 							{{ picture.album.user.lastName ~ '.' ~ picture.album.user.firstName|u.truncate(1)  }}
@@ -25,9 +30,9 @@
 							{% set leftDays = picture.createdAt|date_diff(date("now")) %}
 							{{ leftDays == 0 ? 'Aujourd\hui' : 'Il y a ' ~ leftDays ~ ' Jour(s)' }}
 						</p>
-						
+
 						{{ component('LikePictureComponent', { picture : picture }) }}
-					
+
 					</div>
 				</div>
 

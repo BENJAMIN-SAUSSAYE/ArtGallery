@@ -1,0 +1,9 @@
+<div {{ attributes }} {{ this.state(picture) }} class="d-flex justify-content-end">
+	<button data-action="live#action" data-model='picture' data-action-name="updateState" type="button" class="bg-transparent border-0">
+		{% if this.isLiked %}
+			<span class="link icon-link icon-link-hover icon text-danger">{{ include('/components/svg/_icon_heart_fill.svg.twig') }}</span>
+		{% else %}
+			<span class="link icon-link icon-link-hover icon text-primary-light">{{ include('/components/svg/_icon_heart.svg.twig') }}</span>
+		{% endif %}
+	</button>
+</div>
