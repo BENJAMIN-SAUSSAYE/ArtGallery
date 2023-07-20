@@ -8,9 +8,11 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
+use function PHPUnit\Framework\isEmpty;
+
 class PictureFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const PICTURE_COUNT = 3;
+    public const MAX_PICTURE_COUNT = 5;
 
     public function __construct()
     {
@@ -30,25 +32,31 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
                 $arrayimageRef = $faker->randomElements(
                     [
                         'cormo.jpg',
-                        'quepier.jpg',
+                        'guepier.jpg',
                         'martin.jpg',
                         'renard.jpg',
                         'spatule.jpg',
                         'vache.jpg',
+                        'canard.jpg',
+                        'mouflon.jpg',
+                        'bernache.jpg',
+                        'chevalier.jpg',
+                        'becassine.jpg',
+                        'araignee.jpg',
+                        'ecureuil.jpg',
+                        'papillon.jpg',
                     ],
-                    self::PICTURE_COUNT,
+                    self::MAX_PICTURE_COUNT,
                     false
                 );
 
-                for ($p = 0; $p < self::PICTURE_COUNT; $p++) {
+                for ($p = 0; $p < $faker->numberBetween(1, self::MAX_PICTURE_COUNT); $p++) {
                     $picture = new Picture();
-                    $picture->setCreateAt($faker->dateTimeInInterval('1 year', '+10 days'));
+                    $picture->setCreateAt($faker->dateTimeInInterval('0 day', '-2 months'));
                     $pictureFileName = $this->copyImageFixture($arrayimageRef[$p]);
-
                     $picture->setPictureFile($pictureFileName);
                     $picture->setAlbum($album);
-                    $picture->setIsPrivate(false);
-                    $picture->setTitle($faker->word());
+                    $picture->setTitle($faker->words($nb = 2, true));
                     $manager->persist($picture);
                 }
             }
@@ -59,8 +67,6 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
 
     private function copyImageFixture(String $imageName): string
     {
-        $pictureFileName = '';
-
         //copie du jeux de fichier dans le dossier upload pour les tests.
         $from = dirname(__DIR__, 2) . "/data_migration/";
         $to =  dirname(__DIR__, 2) . "/public/uploads/images/";
@@ -69,9 +75,10 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
             if (basename($f) === $imageName) {
                 $pictureFileName =  uniqid() . '_' . basename($f);
                 copy($f,  $to . $pictureFileName);
+                return $pictureFileName;
             }
         }
-        return $pictureFileName;
+        return '';
     }
 
     public function getDependencies()
