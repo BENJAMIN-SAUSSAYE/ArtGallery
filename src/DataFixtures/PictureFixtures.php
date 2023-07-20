@@ -25,9 +25,9 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
 
             $user = $this->getReference('user_' . $u);
 
-            for ($i = 1; $i <= AlbumFixtures::ALBUM_COUNT; $i++) {
+            for ($i = 0; $i <= AlbumFixtures::ALBUM_COUNT; $i++) {
 
-                $album = $this->getReference('user_' . $u . '_album_' . $i);
+                $album = ($i == 0) ? $mainAlbum = $user->GetAlbums()->first() : $this->getReference('user_' . $u . '_album_' . $i);
 
                 $arrayimageRef = $faker->randomElements(
                     [
@@ -50,7 +50,9 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
                     false
                 );
 
-                for ($p = 0; $p < $faker->numberBetween(1, self::MAX_PICTURE_COUNT); $p++) {
+                $nbrImages = $faker->numberBetween(3, self::MAX_PICTURE_COUNT);
+
+                for ($p = 0; $p < $nbrImages; $p++) {
                     $picture = new Picture();
                     $picture->setCreateAt($faker->dateTimeInInterval('0 day', '-2 months'));
                     $pictureFileName = $this->copyImageFixture($arrayimageRef[$p]);

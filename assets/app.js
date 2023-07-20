@@ -1,3 +1,4 @@
+import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -11,3 +12,12 @@ window.bootstrap = bootstrap;
 
 // any CSS you import will output into a single css file (app.css in this case)
 import "./styles/app.scss";
+
+import { Application } from "@hotwired/stimulus";
+import Lightbox from "stimulus-lightbox";
+
+const application = Application.start();
+application.register("lightbox", Lightbox);
+
+// In your application.js (for example)
+import "lightgallery/css/lightgallery.css";
