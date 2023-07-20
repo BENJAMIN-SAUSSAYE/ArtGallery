@@ -27,7 +27,7 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
 
             for ($i = 0; $i <= AlbumFixtures::ALBUM_COUNT; $i++) {
 
-                $album = ($i == 0) ? $mainAlbum = $user->GetAlbums()->first() : $this->getReference('user_' . $u . '_album_' . $i);
+                $album = ($i == 0) ? $user->GetAlbums()->first() : $this->getReference('user_' . $u . '_album_' . $i);
 
                 $arrayimageRef = $faker->randomElements(
                     [
@@ -50,7 +50,7 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
                     false
                 );
 
-                $nbrImages = $faker->numberBetween(3, self::MAX_PICTURE_COUNT);
+                $nbrImages = $faker->numberBetween(2, self::MAX_PICTURE_COUNT);
 
                 for ($p = 0; $p < $nbrImages; $p++) {
                     $picture = new Picture();
@@ -58,6 +58,21 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
                     $pictureFileName = $this->copyImageFixture($arrayimageRef[$p]);
                     $picture->setPictureFile($pictureFileName);
                     $picture->setAlbum($album);
+
+                    //generate likeuser picture
+                    $arraykeysUser = range(1, UserFixtures::USER_COUNT, 1);
+                    $countUser = $faker->numberBetween(1, UserFixtures::USER_COUNT);
+                    $arrayUserKeysLike = $faker->randomElements(
+                        $arraykeysUser,
+                        $countUser,
+                        false
+                    );
+
+                    foreach ($arrayUserKeysLike as $userKey) {
+                        $userLike = $this->getReference('user_' . $userKey);
+                        $picture->addLikedUser($userLike);
+                    }
+
                     $picture->setTitle($faker->words($nb = 2, true));
                     $manager->persist($picture);
                 }

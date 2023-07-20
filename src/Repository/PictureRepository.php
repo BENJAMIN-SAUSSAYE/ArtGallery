@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Picture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,27 @@ class PictureRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getTopLikedPictures(int $count): array
+    {
+        $resultQuerryArray = $this->createQueryBuilder('p')
+            ->select("p, count(lku) as nbUsers")
+            ->innerJoin("p.album", "a")
+            ->innerJoin("p.likedUsers", "lku")
+            ->Where("a.isPrivate = false")
+            ->andWhere("p.pictureFile != '' ")
+            ->groupBy("p.id")
+            ->orderBy("nbUsers", "DESC")
+            ->setMaxResults($count)
+            ->getQuery()
+            ->getResult();
+
+        $result = [];
+        foreach ($resultQuerryArray as $arrayItem) {
+            $result[] = $arrayItem[0];
+        }
+        return $result;
     }
 
     /**

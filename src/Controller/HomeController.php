@@ -18,7 +18,7 @@ class HomeController extends AbstractController
 		$lastPictures = $pictureRepository->findLastPublicPostedImages(self::NBR_IMAGES);
 
 		return $this->render('home/index.html.twig', [
-			'lastPublicPostedPictures' => $lastPictures,
+			'pictures' => $lastPictures,
 			'nbrlastImages' => self::NBR_IMAGES,
 		]);
 	}
