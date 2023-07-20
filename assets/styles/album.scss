@@ -1,13 +1,5 @@
 @import "_variables";
 
-.card {
-  background-color: $tertiary;
-  box-shadow: $shadow-secondary;
-}
-.card h5 {
-  font-weight: 600;
-}
-
 .card-title.overflow {
   height: 55px;
   max-height: 55px;

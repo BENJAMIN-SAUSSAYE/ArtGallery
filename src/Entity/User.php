@@ -55,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $createdAt = null;
 
+    #[ORM\ManyToMany(targetEntity: Picture::class, mappedBy: 'likedUsers')]
+    private Collection $likedPictures;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -66,6 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $mainAlbum->setUser($this);
         $mainAlbum->setIsMainAlbum(true);
         $this->albums->add($mainAlbum);
+        $this->likedPictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,5 +233,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $total += $album->getPictures()->count();
         }
         return $total;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getLikedPictures(): Collection
+    {
+        return $this->likedPictures;
+    }
+
+    public function addLikedPicture(Picture $likedPicture): static
+    {
+        if (!$this->likedPictures->contains($likedPicture)) {
+            $this->likedPictures->add($likedPicture);
+            $likedPicture->addLikedUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedPicture(Picture $likedPicture): static
+    {
+        if ($this->likedPictures->removeElement($likedPicture)) {
+            $likedPicture->removeLikedUser($this);
+        }
+
+        return $this;
+    }
+
+    public function isInLikedPictures(Picture $picture): bool
+    {
+        return $this->likedPictures->contains($picture);
     }
 }

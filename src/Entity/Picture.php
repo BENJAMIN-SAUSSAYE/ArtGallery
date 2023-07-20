@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -46,11 +48,16 @@ class Picture
     #[ORM\JoinColumn(nullable: true)]
     private ?Album $album = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'likedPictures')]
+    #[ORM\JoinTable(name: 'user_liked_picture')]
+    private Collection $likedUsers;
+
     public function __construct(?bool $isPrivate = false)
     {
         $this->isPrivate = $isPrivate;
         $this->isAlbumCover = false;
         $this->createdAt = new \DateTime('now');
+        $this->likedUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,5 +173,32 @@ class Picture
     public function __toString(): string
     {
         return (isset($this->title)) ? $this->title : '';
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getLikedUsers(): Collection
+    {
+        return $this->likedUsers;
+    }
+
+    public function addLikedUser(User $likedUser): static
+    {
+        if (!$this->likedUsers->contains($likedUser)) {
+            $this->likedUsers->add($likedUser);
+            $likedUser->addLikedPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedUser(User $likedUser): static
+    {
+        if ($this->likedUsers->removeElement($likedUser)) {
+            $likedUser->removeLikedPicture($this);
+        }
+
+        return $this;
     }
 }
