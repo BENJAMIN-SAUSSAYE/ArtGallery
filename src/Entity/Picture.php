@@ -165,6 +165,6 @@ class Picture
 
     public function __toString(): string
     {
-        return $this->title;
+        return (isset($this->title)) ? $this->title : '';
     }
 }
