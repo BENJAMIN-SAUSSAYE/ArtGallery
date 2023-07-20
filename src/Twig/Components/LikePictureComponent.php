@@ -5,8 +5,8 @@ namespace App\Twig\Components;
 use App\Entity\Picture;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
@@ -22,6 +22,9 @@ class LikePictureComponent extends AbstractController
 
 	#[LiveProp]
 	public bool $isLiked = false;
+
+	#[LiveProp]
+	public int $countVotes = 0;
 
 	#[LiveProp]
 	public ?Picture $picture = null;
@@ -44,6 +47,7 @@ class LikePictureComponent extends AbstractController
 			$user->removeLikedPicture($this->picture);
 		}
 		$this->userRepository->save($user, true);
+		$this->countVotes = $this->picture->getLikedUsers()->count();
 	}
 
 	public function getState(): void
@@ -51,5 +55,6 @@ class LikePictureComponent extends AbstractController
 		/** @var User $user */
 		$user = $this->security->getUser();
 		$this->isLiked =  $user->isInLikedPictures($this->picture);
+		$this->countVotes = $this->picture->getLikedUsers()->count();
 	}
 }
