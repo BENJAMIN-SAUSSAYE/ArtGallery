@@ -45,11 +45,13 @@
 				<section>
 					<div class="row mb-4">
 						<div class="col border border-opacity-50 border-bottom-2 border-to-0 border-start-0 border-end-0 border-top-0 border-light mb-4">
-							<h1 class="fw-bolder">Les {{ nbrlastImages }} Dernières Images</h1>
+							<h1 class="fw-bolder">Les
+								{{ nbrlastImages }}
+								Dernières Images</h1>
 						</div>
 					</div>
 
-					<div class="row row-cols-1 row-cols-xl-4 row-cols-xxl-6 g-1 g-sm-4">
+					<div class="row row-cols-1 row-cols-xl-3 row-cols-xxl-4 g-1 g-sm-4">
 						{% for picture in lastPublicPostedPictures %}
 							<div class="col">
 								<div class="p-1 m-1 p-sm-2 m-sm-2 shadow">
@@ -59,23 +61,28 @@
 												<h2 class="card-title text-capitalize text-secondary overflow pb-2 fs-5">
 													{{ picture.album.user.lastName ~ '.' ~ picture.album.user.firstName|u.truncate(1)  }}
 												</h2>
-												<p class="fw-lighter fs-6">
-													{% set leftDays = picture.createdAt|date_diff(date("now")) %}
-													{{ leftDays == 0 ? 'Aujourd\hui' : 'Il y a ' ~ leftDays ~ ' Jour(s)' }}
-												</p>
 											</div>
 										</div>
 
 										<div class="img-container">
-											<div data-controller="lightbox"> 
+											<div data-controller="lightbox">
 												<a href="{{ vich_uploader_asset(picture) }}">
 													<img src="{{ vich_uploader_asset(picture) }}" class="img-thumbnail img-fluid card-img-top" alt="{{ picture.title }}">
 												</a>
 											</div>
 										</div>
 
-										<div class="card-body text-center text-capitalize overflow">
-											<h3 class="letter-spacing-title pb-2 fs-6">{{ picture.title }}</h3>
+										<div class="card-body ">
+											<h3 class="text-capitalize letter-spacing-title pb-2 fs-6">{{ picture.title }}</h3>
+											<div class="d-flex justify-content-between align-items-center">
+												<p class="fw-lighter fs-6">
+													{% set leftDays = picture.createdAt|date_diff(date("now")) %}
+													{{ leftDays == 0 ? 'Aujourd\hui' : 'Il y a ' ~ leftDays ~ ' Jour(s)' }}
+												</p>
+												{% if app.user %}
+													{{ component('LikePictureComponent', { picture : picture }) }}
+												{% endif %}
+											</div>
 										</div>
 
 									</div>

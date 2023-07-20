@@ -28,14 +28,6 @@ class AlbumController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/slider', name: 'slider', methods: ['GET'])]
-    public function showPictures(Album $album): Response
-    {
-        return $this->render('album/showPictures.html.twig', [
-            'album' => $album,
-        ]);
-    }
-
     #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Album $album): Response
     {
