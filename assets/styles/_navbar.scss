@@ -23,3 +23,10 @@
 .custom-border {
   border-bottom: 1px solid $primary;
 }
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+  letter-spacing: 2px;
+  text-decoration: underline;
+  font-weight: 600;
+  text-underline-offset: 0.8rem;
+}

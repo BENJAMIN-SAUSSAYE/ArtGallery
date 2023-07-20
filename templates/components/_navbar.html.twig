@@ -1,3 +1,4 @@
+{% set route_name = app.request.attributes.get('_route') %}
 <nav class="navbar bg-dark border-bottom border-bottom-dark fixed-top navbar-expand-md" data-bs-theme="dark" >
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{ path('app_home_index') }}">
@@ -10,11 +11,14 @@
 			<ul class="navbar-nav d-flex justify-content-between w-100 align-lg-items-center gap-lg-4 pt-4 pt-md-0 pb-2 pb-md-0">
 				<div class="d-flex flex-column flex-md-row">
 					<li class="nav-item px-2">
+						<a class="nav-link letter-spacing {{ route_name == 'app_home_index' ? 'active' : '' }}" href="{{ path('app_home_index') }}">HOME</a>
+					</li>
+					<li class="nav-item px-2">
 						<a class="nav-link letter-spacing" href="#">POPULAIRES</a>
 					</li>
 					{% if is_granted('ROLE_USER') %}
 					<li class="nav-item px-2">
-						<a class="nav-link letter-spacing" href="{{ path('app_album_index') }}">MES ALBUMS</a>
+						<a class="nav-link letter-spacing {{ route_name == 'app_album_index' ? 'active' : '' }}" href="{{ path('app_album_index') }}">MES ALBUMS</a>
 					</li>
 					<li class="nav-item px-2">
 						<a class="nav-link letter-spacing" href="#">MES FAVORIS</a>
