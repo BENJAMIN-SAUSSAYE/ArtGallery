@@ -51,19 +51,12 @@
 					</div>
 				</div>
 
-				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-4 mb-4">
+				<div data-controller="lightbox" class="grid-lightbox">
 					{% for picture in album.pictures %}
 						{% if picture.pictureFile is not empty %}
-							<div class="col">
-								<div class="img-container rounded-2">
-									<a href="{{ path('app_album_slider', {'id': picture.album.id}) }}" class="link-underline-opacity-0">
-										<img src="{{ vich_uploader_asset(picture) }}" class="img-thumbnail img-fluid " alt="picture image">
-									</a>
-								</div>
-								<div class="text-center mt-2">
-									<h4 class="fs-5">{{ picture.title }}</h4>
-								</div>
-							</div>
+							<a href="{{ vich_uploader_asset(picture) }}">
+								<img src="{{ vich_uploader_asset(picture) }}" class="img-thumbnail img-fluid" alt="{{ picture.title ?  picture.title : picture.pictureFile }}"/>
+							</a>
 						{% endif %}
 					{% endfor %}
 				</div>

@@ -67,9 +67,11 @@
 										</div>
 
 										<div class="img-container">
-											<a href="{{ path('app_picture_show', {'id': picture.id}) }}" class="link-underline-opacity-0">
-												<img src="{{ vich_uploader_asset(picture) }}" class="img-thumbnail img-fluid card-img-top" alt="album image">
-											</a>
+											<div data-controller="lightbox"> 
+												<a href="{{ vich_uploader_asset(picture) }}">
+													<img src="{{ vich_uploader_asset(picture) }}" class="img-thumbnail img-fluid card-img-top" alt="{{ picture.title }}">
+												</a>
+											</div>
 										</div>
 
 										<div class="card-body text-center text-capitalize overflow">

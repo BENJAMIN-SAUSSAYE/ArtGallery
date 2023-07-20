@@ -27,7 +27,7 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setEmail('user_' . $i . '@monsite.com');
             $user->setRoles(['ROLE_USER']);
-            $user->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('1 year', '+10 days')));
+            $user->setCreatedAt($faker->dateTimeInInterval('0 day', '-2 months'));
 
             $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
@@ -54,7 +54,7 @@ class UserFixtures extends Fixture
         $admin->setPassword($hashedPassword);
         $admin->setFirstname('Benjamin');
         $admin->setLastname('Saussaye');
-        $admin->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('1 year', '+10 days')));
+        $admin->setCreatedAt($faker->dateTimeInInterval('0 day', '-2 months'));
         $this->addReference('user_admin', $admin);
         $manager->persist($admin);
         $manager->flush();
