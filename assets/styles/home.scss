@@ -1,3 +1,5 @@
+@import "_variables";
+
 header {
   & p {
     font-size: clamp(1rem, 1vw, 2.5rem);
@@ -8,4 +10,21 @@ header {
   height: 60px;
   max-height: 60px;
   overflow: hidden;
+}
+
+.site-title {
+  font-weight: 300;
+  font-size: 4rem;
+  letter-spacing: 8px;
+  color: $tertiary;
+  font-size: clamp(2rem, 10vw, 5rem);
+}
+.site-title::first-letter {
+  font-size: clamp(4rem, 30vw, 10rem);
+  font-weight: 600;
+  color: $light;
+}
+
+.logo-home {
+  width: clamp(4rem, 15vw, 10rem);
 }
