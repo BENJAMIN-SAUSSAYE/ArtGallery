@@ -52,9 +52,12 @@ class LikePictureComponent extends AbstractController
 
 	public function getState(): void
 	{
+
 		/** @var User $user */
 		$user = $this->security->getUser();
-		$this->isLiked =  $user->isInLikedPictures($this->picture);
+		if (isset($user)) {
+			$this->isLiked =  $user->isInLikedPictures($this->picture);
+		}
 		$this->countVotes = $this->picture->getLikedUsers()->count();
 	}
 }

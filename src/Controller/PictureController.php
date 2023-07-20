@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/picture')]
+#[Route('/image')]
 class PictureController extends AbstractController
 {
+    private const NBR_LIKED_IMAGES = 20;
+
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
     public function index(PictureRepository $pictureRepository): Response
     {
@@ -27,6 +29,16 @@ class PictureController extends AbstractController
     {
         return $this->render('picture/show.html.twig', [
             'picture' => $picture,
+        ]);
+    }
+
+    #[Route('/populaires/liste', name: 'app_picture_liked', methods: ['GET'])]
+    public function populairPictures(PictureRepository $pictureRepository): Response
+    {
+        $picturesLiked = $pictureRepository->getTopLikedPictures(self::NBR_LIKED_IMAGES);
+
+        return $this->render('picture/liked_pictures.html.twig', [
+            'pictures' => $picturesLiked,
         ]);
     }
 }

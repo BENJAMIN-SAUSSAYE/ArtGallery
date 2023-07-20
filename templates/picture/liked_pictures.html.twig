@@ -1,0 +1,24 @@
+{% extends 'visitor.html.twig' %}
+{% block title %}
+	{{ parent()}}
+	- Populaires
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('album') }}
+{% endblock %}
+{% block body %}
+	<main class="mt-4">
+		<div class="container-fluid px-1 px-sm-4 m-auto">
+			<div class="row">
+				<div class="col border border-opacity-50 border-bottom-2 border-to-0 border-start-0 border-end-0 border-top-0 border-light mb-4">
+					<h1 class="fw-bolder">Images Les Plus Polulaires</h1>
+				</div>
+			</div>
+
+			<div class="row row-cols-1 row-cols-xl-3 row-cols-xxl-4 g-1 g-sm-4">
+				{% include '/components/_pictures.html.twig' with {'pictures' : pictures}  %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

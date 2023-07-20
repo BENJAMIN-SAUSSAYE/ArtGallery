@@ -1,10 +1,13 @@
 <div {{ attributes }} {{ this.state(picture) }} class="d-flex justify-content-center align-items-center">
-	<span class="px-2">{{ this.countVotes }}</span>
-	<button data-action="live#action" data-model='picture' data-action-name="updateState" type="button" class="bg-transparent border-0">
-		{% if this.isLiked %}
-			<span class="link icon-link icon-link-hover icon text-secondary">{{ include('/components/svg/_icon_star_fill.svg.twig') }}</span>
-		{% else %}
-			<span class="link icon-link icon-link-hover icon text-light">{{ include('/components/svg/_icon_star.svg.twig') }}</span>
-		{% endif %}
-	</button>
+	<span class="px-2">{{ this.countVotes ~ ' Vote' ~ (this.countVotes > 0 ? 's') }}</span>
+	{% if app.user %}
+		<hr>
+		<button data-action="live#action" data-model='picture' data-action-name="updateState" type="button" class="bg-transparent border-0">
+			{% if this.isLiked %}
+				<span class="link icon-link icon-link-hover icon text-secondary">{{ include('/components/svg/_icon_star_fill.svg.twig') }}</span>
+			{% else %}
+				<span class="link icon-link icon-link-hover icon text-light">{{ include('/components/svg/_icon_star.svg.twig') }}</span>
+			{% endif %}
+		</button>
+	{% endif %}
 </div>

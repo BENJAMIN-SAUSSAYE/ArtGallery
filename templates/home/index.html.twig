@@ -52,43 +52,7 @@
 					</div>
 
 					<div class="row row-cols-1 row-cols-xl-3 row-cols-xxl-4 g-1 g-sm-4">
-						{% for picture in lastPublicPostedPictures %}
-							<div class="col">
-								<div class="p-1 m-1 p-sm-2 m-sm-2 shadow">
-									<div class="card border-0">
-										<div class="card-header bg-transparent">
-											<div class="d-flex flex-column justify-content-center align-items-center">
-												<h2 class="card-title text-capitalize text-secondary overflow pb-2 fs-5">
-													{{ picture.album.user.lastName ~ '.' ~ picture.album.user.firstName|u.truncate(1)  }}
-												</h2>
-											</div>
-										</div>
-
-										<div class="img-container">
-											<div data-controller="lightbox">
-												<a href="{{ vich_uploader_asset(picture) }}">
-													<img src="{{ vich_uploader_asset(picture) }}" class="img-thumbnail img-fluid card-img-top" alt="{{ picture.title }}">
-												</a>
-											</div>
-										</div>
-
-										<div class="card-body ">
-											<h3 class="text-capitalize letter-spacing-title pb-2 fs-6">{{ picture.title }}</h3>
-											<div class="d-flex justify-content-between align-items-center">
-												<p class="fw-lighter fs-6">
-													{% set leftDays = picture.createdAt|date_diff(date("now")) %}
-													{{ leftDays == 0 ? 'Aujourd\hui' : 'Il y a ' ~ leftDays ~ ' Jour(s)' }}
-												</p>
-												{% if app.user %}
-													{{ component('LikePictureComponent', { picture : picture }) }}
-												{% endif %}
-											</div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-						{% endfor %}
+						{% include '/components/_pictures.html.twig' with {'pictures' : pictures}  %}
 					</div>
 				</section>
 			</main>
