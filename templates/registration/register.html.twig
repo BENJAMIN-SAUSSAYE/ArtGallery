@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block body %}
+<turbo-frame id="the_frame_id">
 	{% for flash_error in app.flashes('verify_email_error') %}
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 	{% endfor %}
@@ -46,4 +47,5 @@
 			</div>
 		</section>
 	</main>
+</turbo-frame>
 {% endblock %}

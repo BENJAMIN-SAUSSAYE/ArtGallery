@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block body %}
+<turbo-frame id="the_frame_id">
 	<main class="container-fluid">
 		{% if error %}
 			<div class="my-3 bg-danger p-3 rounded">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -51,4 +52,5 @@
 			</div>
 		</div>
 	</main>
+</turbo-frame>
 {% endblock %}
