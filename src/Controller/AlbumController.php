@@ -28,64 +28,19 @@ class AlbumController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/album/{id}/slider', name: 'slider', methods: ['GET'])]
+    public function showPictures(Album $album): Response
     {
-        $album = new Album();
-        $album->setCreatedAt(new \DateTime());
-        /** @var User $user */
-        $user = $this->getUser();
-        $album->setUser($user);
-        $form = $this->createForm(AlbumType::class, $album);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($album);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_album_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('album/new.html.twig', [
+        return $this->render('album/showPictures.html.twig', [
             'album' => $album,
-            'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/album/{id}', name: 'show', methods: ['GET'])]
     public function show(Album $album): Response
     {
         return $this->render('album/show.html.twig', [
             'album' => $album,
         ]);
-    }
-
-    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Album $album, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(AlbumType::class, $album);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_album_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('album/edit.html.twig', [
-            'album' => $album,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, Album $album, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $album->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($album);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_album_index', [], Response::HTTP_SEE_OTHER);
     }
 }
