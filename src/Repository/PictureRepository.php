@@ -39,7 +39,18 @@ class PictureRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    public function getPublicPictures($nbrImagesShow): array
+    {
+        return $this->createQueryBuilder('i')
+            ->innerJoin("i.album", "album")
+            ->addSelect('i')
+            ->Where("album.isPrivate = false")
+            ->andWhere("i.pictureFile != '' ")
+            ->orderBy("i.createdAt", "DESC")
+            ->setMaxResults($nbrImagesShow)
+            ->getQuery()
+            ->getResult();
+    }
     public function getTopLikedPictures(int $count): array
     {
         $resultQuerryArray = $this->createQueryBuilder('p')

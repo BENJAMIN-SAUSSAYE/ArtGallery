@@ -17,12 +17,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PictureController extends AbstractController
 {
     private const NBR_LIKED_IMAGES = 20;
+    private const NBR_IMAGES_VISIBLE = 150;
 
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
     public function index(PictureRepository $pictureRepository): Response
     {
         return $this->render('picture/index.html.twig', [
-            'pictures' => $pictureRepository->findAll(),
+            'pictures' => $pictureRepository->getPublicPictures(self::NBR_IMAGES_VISIBLE),
         ]);
     }
 
