@@ -161,7 +161,7 @@ class Album
 
     public function __toString(): string
     {
-        return $this->name;
+        return (isset($this->name)) ? $this->name : '';
     }
 
     public function getPictureCover(): ?Picture
@@ -171,6 +171,6 @@ class Album
                 return $picture;
             }
         }
-        return null;
+        return $this->getPictures()->first() ? $this->getPictures()->first() : null;
     }
 }
