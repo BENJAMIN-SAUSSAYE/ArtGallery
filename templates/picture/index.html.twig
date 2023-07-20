@@ -1,48 +1,34 @@
 {% extends 'visitor.html.twig' %}
 {% block title %}
 	{{ parent()}}
-	- Index Images
+	- Images
 {% endblock %}
 {% block stylesheets %}
 	{{ parent() }}
 	{{ encore_entry_link_tags('album') }}
 {% endblock %}
 {% block body %}
-    <h1>Liste Des Images</h1>
+	<main class="mt-4">
+		<div class="container-fluid px-4 m-auto">
+			<div class="row">
+				<div class="col border border-opacity-50 border-bottom-2 border-to-0 border-start-0 border-end-0 border-top-0 border-light mb-4">
+					<h1 class="fw-bolder">Images</h1>
+				</div>
+			</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>FileName</th>
-                <th>CreatedAt</th>
-                <th>IsPrivate</th>
-                <th>IsAlbumCover</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for picture in pictures %}
-            <tr>
-                <td>{{ picture.id }}</td>
-                <td>{{ picture.title }}</td>
-                <td>{{ picture.pictureFile }}</td>
-                <td>{{ picture.createdAt|date("d/m/Y") }}</td>
-                <td>{{ picture.isPrivate ? 'Yes' : 'No' }}</td>
-                <td>{{ picture.isAlbumCover ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_picture_show', {'id': picture.id}) }}">show</a>
-                    <a href="{{ path('app_picture_edit', {'id': picture.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_picture_new') }}">Create new</a>
+			<div class="row">
+				{% for picture in pictures %}
+					<div class="col">
+						<div class="d-flex flex-column align-items-center">
+							<div>{{ picture.title }}</div>
+							<div>{{ picture.createdAt|date("d/m/Y") }}</div>
+							<div class="d-flex justify-content-center align-items-center">
+								<img src="{{ vich_uploader_asset(picture) }}" class="d-block vh-100 shadow-lg rounded-1" alt="image">
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 {% endblock %}

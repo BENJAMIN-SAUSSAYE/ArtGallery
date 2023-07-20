@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Picture;
 use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -161,5 +162,15 @@ class Album
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getPictureCover(): ?Picture
+    {
+        foreach ($this->getPictures() as $picture) {
+            if ($picture->isIsAlbumCover()) {
+                return $picture;
+            }
+        }
+        return null;
     }
 }

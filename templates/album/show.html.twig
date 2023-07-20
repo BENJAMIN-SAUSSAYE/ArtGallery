@@ -8,36 +8,69 @@
 	{{ encore_entry_link_tags('album') }}
 {% endblock %}
 {% block body %}
-    <h1>Mon Album</h1>
+	<main class="mt-4">
+		<div class="container-fluid px-4 m-auto">
+			<div class="row border border-opacity-50 border-bottom-2 border-to-0 border-start-0 border-end-0 border-top-0 border-light mb-4">
+				<div class="col">
+					<div class="d-flex justify-content-between align-items-center">
+						<h1 class="fw-bolder">{{ album.name|u.truncate(20, '...') }}</h1>
+						<span class="fw-medium fs-6">{{ album.createdAt ? album.createdAt|date('d/m/Y H:i') : '' }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="row  mb-4">
+				<div class="col">
+					<div class="d-flex justify-content-end align-items-center">
+						{% if album.isPrivate %}
+							<span class="text-secondary pe-1 fs-3">{% include "components/svg/_icon_eye.svg.twig" %}
+								public</span>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ album.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ album.name }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ album.createdAt ? album.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ album.description }}</td>
-            </tr>
-            <tr>
-                <th>IsPrivate</th>
-                <td>{{ album.isPrivate ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+						{% else %}
+							<span class="text-light pe-1 fs-3">{% include "components/svg/_icon_lock.svg.twig" %}
+								private</span>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="row  mb-4">
+				<div class="col">
+					<div class="fs-6 fst-italic bg-light rounded-1 text-dark px-2 py-1 my-1 description">
+						{{ album.description }}
+					</div>
+				</div>
+			</div>
 
-    <a href="{{ path('app_album_index') }}">back to list</a>
+			<div class="row  mb-4">
+				<div class="col">
+					{{ album.pictures|length ~ ' image(s)' }}
+					<hr>
+				</div>
+			</div>
 
-    <a href="{{ path('app_album_edit', {'id': album.id}) }}">edit</a>
+			<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-4 mb-4">
+				{% for picture in album.pictures %}
+					{% if picture.pictureFile is not empty %}
+						<div class="col">
+							<a href="{{ path('app_album_slider', {'id': picture.album.id}) }}">
+								<img src="{{ vich_uploader_asset(picture) }}" class="img-fluid" alt="picture image content">
+							</a>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
 
-    {{ include('album/_delete_form.html.twig') }}
+			<div class="row  mb-4">
+				<div class="col">
+					<div class="d-flex justify-content-end align-items-center">
+						<a href="{{ path('app_album_index') }}" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
+							<span class="text-light pe-1">{% include "components/svg/_icon_backlink.svg.twig" %}</span>
+							RETOUR
+						</a>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</main>
 {% endblock %}

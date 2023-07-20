@@ -9,30 +9,24 @@
 {% endblock %}
 {% block body %}
 	<main class="mt-4">
-		<div class="container">
-			<div class="row border border-opacity-50 border-bottom-2 border-to-0 border-start-0 border-end-0 border-top-0 border-light">
-				<h1 class="fw-bolder">Mes Albums</h1>
-			</div>
+		<div class="container-fluid px-4 m-auto">
 			<div class="row">
-				<div class="d-flex justify-content-end align-self-end px-4">
-					<a role="button" class="btn fw-bolder icon-link icon-link-hover-left icon-dark text-uppercase letter-spacing px-4 my-4" href="{{ path('app_album_new') }}">
-						{{ include('/components/svg/_icon_add.svg.twig') }}
-						AJOUTER</a>
+				<div class="col border border-opacity-50 border-bottom-2 border-to-0 border-start-0 border-end-0 border-top-0 border-light mb-4">
+					<h1 class="fw-bolder">Mes Albums</h1>
 				</div>
 			</div>
-
-			<div class="container text-center">
-				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-4">
+			<div class="text-center">
+				<div class="row row-cols-1 row-cols-xl-2 row-cols-xxl-3 g-4">
 					{% for album in albums %}
 						<div class="col">
 							<div class="card">
-								<div class="card-header d-flex justify-content-between align-items-center">
+								<div class="card-header d-flex flex-sm-column justify-content-between align-items-center">
 									<span class="text-capitalize">
 										{% if album.isPrivate %}
 											<span class="text-secondary pe-1">{% include "components/svg/_icon_eye.svg.twig" %}</span>
 											public
 										{% else %}
-											<span class="text-dark pe-1">{% include "components/svg/_icon_eye_crossed.svg.twig" %}</span>
+											<span class="text-dark pe-1">{% include "components/svg/_icon_lock.svg.twig" %}</span>
 											private
 										{% endif %}
 									</span>
@@ -40,20 +34,21 @@
 										{{ album.createdAt ? album.createdAt|date('d/m/Y') : '' }}
 									</span>
 								</div>
+
 								<a href="{{ path('app_album_show', {'id': album.id}) }}">
-									<img src="{{asset('build/images/placeholder/placeholder_album_250x150.svg')}}" class="card-img-top" alt="album image">
-								</a>
-								<div class="card-body">
-									<h5 class="card-title overflow letter-spacing-title pb-2 fs-6">{{ album.name }}</h5>
-									<p class="card-text overflow">{{ album.description }}</p>
-								</div>
-								<div class="card-footer text-end">
-									{% if not album.isMainAlbum %}
-										<a href="{{ path('app_album_edit', {'id': album.id}) }}" class="card-link fw-bolder icon-link icon-link-hover-left icon-light text-uppercase text-decoration-none letter-spacing pe-1">
-											{{ include('/components/svg/_icon_edit.svg.twig') }}
-											<span class="text-shadow">Modifier</span>
-										</a>
+									{% if album.pictureCover is not empty %}
+										<img src="{{ vich_uploader_asset(album.pictureCover) }}" class="card-img-top img-fluid" alt="album image">
+									{% else %}
+										<img src="{{ asset('build/images/placeholder/placeholder_album_250x150.svg') }}" class="card-img-top img-fluid" alt="album image">
 									{% endif %}
+								</a>
+
+								<div class="card-body">
+									<h5 class="card-title text-secondary overflow letter-spacing-title pb-2 fs-5">{{ album.name|u.truncate(20, '...') }}</h5>
+								</div>
+
+								<div class="card-footer text-end">
+									<span class="text-capitalize fs-6">{{ album.pictures|length ~ ' image(s)' }}</span>
 								</div>
 							</div>
 						</div>

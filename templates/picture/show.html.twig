@@ -1,47 +1,35 @@
 {% extends 'visitor.html.twig' %}
 {% block title %}
 	{{ parent()}}
-	- Index Images
+	- Image
 {% endblock %}
 {% block stylesheets %}
 	{{ parent() }}
 	{{ encore_entry_link_tags('album') }}
 {% endblock %}
 {% block body %}
-    <h1>Picture</h1>
+	<main class="mt-4">
+		<div class="container-fluid px-4 m-auto">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ picture.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ picture.title }}</td>
-            </tr>
-            <tr>
-                <th>FileName</th>
-                <td>{{ picture.fileName }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ picture.createdAt }}</td>
-            </tr>
-            <tr>
-                <th>IsPrivate</th>
-                <td>{{ picture.isPrivate ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>IsAlbumCover</th>
-                <td>{{ picture.isAlbumCover ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+			<div class="row">
+				<div class="col">
+					<div class="d-flex justify-content-center align-items-center">
+						<img src="{{ vich_uploader_asset(picture) }}" class="d-block vh-100 shadow-lg rounded-1" alt="image">
+					</div>
+				</div>
+			</div>
 
-    <a href="{{ path('app_picture_index') }}">back to list</a>
+			<div class="row mb-4">
+				<div class="col">
+					<div class="d-flex justify-content-end align-items-center">
+						<a href="{{ path('app_album_show', {'id': picture.album.id}) }}" role="button" class="btn fw-bolder icon-link icon-link-hover icon-dark text-uppercase letter-spacing px-4 my-4">
+							<span class="text-light pe-1">{% include "components/svg/_icon_backlink.svg.twig" %}</span>
+							RETOUR
+						</a>
+					</div>
+				</div>
+			</div>
 
-    <a href="{{ path('app_picture_edit', {'id': picture.id}) }}">edit</a>
-
-    {{ include('picture/_delete_form.html.twig') }}
+		</div>
+	</main>
 {% endblock %}
